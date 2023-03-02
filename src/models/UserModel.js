@@ -1,20 +1,32 @@
 const bcrypt = require('bcryptjs');
-const mongoose =require('mongoose');
-const UserSchema=new mongoose.Schema({
-    name:{type:String,max:30,required:true},
-    email:{type:String,unique:true,required: true},
-    phone_number:{type:String,max: 13},
-    password:{type:String,max:6},
+const mongoose = require('mongoose');
+const UserSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        max: [30, 'Please Input Your Name'],
+        required: [true, 'Must be required your name']
+    },
+    email: {
+        type: String,
+        unique: [true, 'your email must be unique/used already'],
+        required: [true, 'email must be required']
+    },
+    phone_number: {type: String, max: 13},
 
-    role:{
-        type:String,
-        default:"ACO",
+    password: {
+        type: String,
+        max: [6,'Your Password must be in 6 digits']
+    },
+
+    role: {
+        type: String,
+        default: "ACO",
         // ACO=Account Owner,BM=Brand Manager,OM=OutletManager
-        enum:["ACO","BM","OM"],
-        required:true
+        enum: ["ACO", "BM", "OM"],
+        required: true
     }
 
-},{versionKey:false},{timestamps:true})
+}, {versionKey: false}, {timestamps: true})
 
 // Password Hash Function using Bycryptjs
 
@@ -32,6 +44,6 @@ UserSchema.methods = {
     },
 };
 
-const UserModel=mongoose.model('user',UserSchema)
+const UserModel = mongoose.model('user', UserSchema)
 
-module.exports=UserModel
+module.exports = UserModel
