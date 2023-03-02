@@ -5,6 +5,7 @@ const UserSchema=new mongoose.Schema({
     email:{type:String,unique:true,required: true},
     phone_number:{type:String,max: 13},
     password:{type:String,max:6},
+
     role:{
         type:String,
         default:"ACO",
@@ -15,6 +16,8 @@ const UserSchema=new mongoose.Schema({
 
 },{versionKey:false},{timestamps:true})
 
+// Password Hash Function using Bycryptjs
+
 UserSchema.pre('save', async function hashPassword(next) {
     if (this.isModified('password')) {
         const salt = await bcrypt.genSalt(10);
@@ -22,6 +25,12 @@ UserSchema.pre('save', async function hashPassword(next) {
     }
     next();
 });
+
+UserSchema.methods = {
+    async authenticate(password) {
+        return await bcrypt.compare(password, this.password);
+    },
+};
 
 const UserModel=mongoose.model('user',UserSchema)
 
