@@ -49,9 +49,44 @@ const OutLetSchema = new mongoose.Schema({
         default: 'inclusive',
 
     },
-    paymentMethod:{
+    paymentMethod: {
+        cashOnDelivery: {
+            type: Boolean,
+            default: true
+        },
+        digitalPayment: {
+            type: Boolean,
+            default: false
+        }
+    },
+    deliveryArea: [
+        {
+            type: String,
+            required: [true, "Must be selected one area please"]
+        }
+    ],
+    tableNumber: [
+        {
+            type: Number,
+        }
+    ],
 
+    outletOwner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: [true, 'Must be select a User']
+    },
+
+    outletStatus: {
+        type: String,
+        enum: ['Open', 'Closed', 'Paused'],
+        default: 'Open'
+    },
+    isApprove: {
+        type: Boolean,
+        default: false
     }
+
 })
 
 
