@@ -38,7 +38,7 @@ UserSchema.methods = {
 //Validations
 user.path('phone_number').validate(function (value) {
   const regex = /^\d{13}$/; // regular expression to match 11 digits
-  return regex.test(phoneNumber);
+  return regex.test(value);
 }, 'Must be a valid phone number');
 
 const UserModel = mongoose.model('user', UserSchema);
