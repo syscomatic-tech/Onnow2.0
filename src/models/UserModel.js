@@ -25,28 +25,15 @@ const UserSchema = new mongoose.Schema({
         // ACO=Account Owner,BM=Brand Manager,OM=OutletManager
         enum: ["ACO", "BM", "OM"],
         required: true
+    },
+    isActive: {
+        type: Boolean, default: false
+    },
+    isVerified: {
+        type: Boolean, default: false
     }
 
 }, {versionKey: false}, {timestamps: true})
-
-const UserSchema = new mongoose.Schema(
-    {
-        name: {type: String, max: 30, required: true},
-        email: {type: String, unique: true, required: true},
-        phone_number: {type: String, max: [13, 'Must be a valid phone number']},
-        password: {type: String, max: 6},
-
-        role: {
-            type: String,
-            default: 'ACO',
-            // ACO=Account Owner,BM=Brand Manager,OM=OutletManager
-            enum: ['ACO', 'BM', 'OM'],
-            required: true,
-        },
-    },
-    {versionKey: false},
-    {timestamps: true}
-);
 
 
 // Password Hash Function using Bycryptjs
@@ -66,12 +53,8 @@ UserSchema.methods = {
 };
 
 
-const UserModel = mongoose.model('user', UserSchema)
-
-module.exports = UserModel
-
 //Validations
-user.path('phone_number').validate(function (value) {
+UserSchema.path('phone_number').validate(function (value) {
     const regex = /^\d{13}$/; // regular expression to match 11 digits
     return regex.test(value);
 }, 'Must be a valid phone number');

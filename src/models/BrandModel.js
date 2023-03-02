@@ -33,3 +33,5 @@ const BrandSchema = new mongoose.Schema({
     }
 },{versionKey:true},{timestamps:true})
 
+const BrandModel=mongoose.model('brand',BrandSchema);
+module.exports=BrandModel;
