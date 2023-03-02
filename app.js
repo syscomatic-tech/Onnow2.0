@@ -38,7 +38,8 @@ const limiter = rateLimit({windowMs: 15 * 60 * 1000, max: 3000})
 app.use(limiter)
 
 // Mongo DB Database Connection
-let URI = "mongodb://127.0.0.1:27017/assignmentFour";
+let URI = "mongodb://127.0.0.1:27017/OnnowApp";
+
 // let URI="mongodb+srv://ZahedMongo:0D8putbAgHJfJtr1@cluster0.agrwzim.mongodb.net/task-manager?retryWrites=true&w=majority";
 // let OPTION={user:"ZahedMongo",pass:"0D8putbAgHJfJtr1",autoIndex:true}
 
