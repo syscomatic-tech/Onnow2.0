@@ -85,8 +85,31 @@ const OutLetSchema = new mongoose.Schema({
     isApprove: {
         type: Boolean,
         default: false
-    }
+    },
 
+    shift: [
+        {
+            day: {
+                type: String,
+                enum: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+                required: [true, 'must be select a day']
+            },
+
+            isOpen: {
+                type: Boolean,
+                default: true
+            },
+            startHour: {
+                type: String,
+                required:[true,'must be select a starting hour']
+            },
+            endHour: {
+                type: String,
+                required:[true,'must be select a end hour']
+
+            }
+        }
+    ]
 })
 
 
