@@ -10,6 +10,19 @@ const BrandManagerSchema = new mongoose.Schema({
         },
 
     ],
+    userAdmin:{
+      type:mongoose.Schema.Types.ObjectId,
+        ref:'user',
+        required:[true,'must be select an admin ']
+    },
+
+    userManager:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'brandManager',
+        required: true
+    },
+
+
     ProfilePic: {
         type: String
     },

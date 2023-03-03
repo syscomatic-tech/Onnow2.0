@@ -8,8 +8,6 @@ const OutletManagerSchema = new mongoose.Schema({
             ref: 'outlet',
             required: [true, 'Select a Brand Please']
         },
-
-
     ],
 
     brands: [
@@ -19,6 +17,18 @@ const OutletManagerSchema = new mongoose.Schema({
             required: [true, 'Select a Brand Please']
         }
     ],
+    userAdmin: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: [true, 'must be select an admin ']
+    },
+
+    userManager: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'brandManager',
+        required: true
+    },
+
     ProfilePic: {
         type: String
     },

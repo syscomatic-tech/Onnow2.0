@@ -36,6 +36,8 @@ const UserSchema = new mongoose.Schema({
 }, {versionKey: false}, {timestamps: true})
 
 
+
+
 // Password Hash Function using Bycryptjs
 
 UserSchema.pre('save', async function hashPassword(next) {
