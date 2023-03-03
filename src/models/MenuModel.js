@@ -5,14 +5,10 @@ const MenuSchema = new mongoose.Schema({
     required: [true, 'Must set a menu name'],
     max: [20, 'Menu name cannot be greater than 20 characters'],
   },
-
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-  offlineTime: {
-    type: String,
-    default: '',
+  brand: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'brand',
+    required: [true, 'Must select a brand'],
   },
 });
 
