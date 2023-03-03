@@ -22,6 +22,25 @@ const CustomerSchema = new mongoose.Schema({
       ref: 'discount',
     },
   ],
+  addresses: [
+    {
+      label: {
+        type: String,
+        required: [
+          true,
+          'Please enter a address label (example: Home, Office)',
+        ],
+      },
+      address: {
+        type: String,
+        required: [true, 'Please enter an address'],
+      },
+      deliveryInstruction: {
+        type: String,
+        default: '',
+      },
+    },
+  ],
 });
 
 // Password Hash Function using Bycryptjs
