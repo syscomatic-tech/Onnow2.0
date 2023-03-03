@@ -51,14 +51,5 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-<<<<<<< HEAD
-})
-
-const OrderModel = mongoose.model('order', OrderSchema)
-module.exports = OrderModel
-
-//Live Order
-=======
 const OrderModel = mongoose.model('order', OrderSchema);
 module.exports = OrderModel;
->>>>>>> 9350c6b9ea789f5f7d58f716909f604716161933
