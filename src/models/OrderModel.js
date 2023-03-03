@@ -9,7 +9,25 @@ const OrderSchema = new mongoose.Schema({
     orderId: {
         type: String,
         required: true,
-    }
+    },
+
+    customer:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'customer',
+        required:[true,'Must select a customer']
+    },
+    outlet:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'outlet',
+        required:[true,'Must select an outlet']
+    },
+    items:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'menuItem',
+            required:[true,'Must select menuItems']
+        }
+    ]
 })
 
 const OrderModel = mongoose.model('order', OrderSchema)
