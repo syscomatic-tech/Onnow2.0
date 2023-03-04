@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
         max: [6, 'Your Password must be in 6 digits']
     },
 
+    otp: {
+        type: Number,
+    },
+
     role: {
         type: String,
         default: "ACO",
