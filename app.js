@@ -10,7 +10,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 
-const router = require('./src/routes/api');
+const routes = require('./src/routes');
 const { connectWithDB } = require('./src/config/mongo');
 const { handleError } = require('./src/utility/errors.js');
 
@@ -37,7 +37,7 @@ app.use(limiter);
 connectWithDB();
 
 // Routing Implement
-app.use('/api/v1', router);
+app.use('/api/v1', routes);
 app.use(handleError);
 
 // Undefined Route Implement
