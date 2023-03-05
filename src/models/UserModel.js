@@ -14,9 +14,9 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'email must be required'],
     },
     phoneNumber: {
-        type: String,
-        max:[13,'Phone Number must be less then 14'],
-        unique: [true,'Your Phone Number Must be Unique/Already Used!']
+      type: String,
+      max: [13, 'Phone Number must be less then 14'],
+      unique: [true, 'Your Phone Number Must be Unique/Already Used!'],
     },
 
     password: {
@@ -56,6 +56,7 @@ UserSchema.pre('save', async function hashPassword(next) {
 
 UserSchema.methods = {
   async authenticate(password) {
+    console.log(this.password);
     return await bcrypt.compare(password, this.password);
   },
 };
