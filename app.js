@@ -1,10 +1,7 @@
 // Basic Lib Import
+require('dotenv').config();
 const express = require('express');
-const router = require('./src/routes/api');
-const app = new express();
-const bodyParser = require('body-parser');
-
-
+const mongoose = require('mongoose');
 // Security Middleware Lib Import
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -13,17 +10,11 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 
-// Database Lib Import
-const mongoose = require('mongoose');
+const routes = require('./src/routes');
+const { connectWithDB } = require('./src/config/mongo');
+const { handleError } = require('./src/utility/errors.js');
 
-
-
-// Error Handle
-const {handleError} = require('./src/utility/errors.js');
-
-
-// your code here
-
+const app = new express();
 
 // Security Middleware Implement
 app.use(cors());
@@ -32,37 +23,27 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
-
-// Body Parser Implement
-app.use(bodyParser.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 
 // Mongoose Strict Query
 mongoose.set('strictQuery', false);
 
-
 // Request Rate Limit
-const limiter = rateLimit({windowMs: 15 * 60 * 1000, max: 3000});
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 3000 });
 app.use(limiter);
 
 // Mongo DB Database Connection
-let URI = 'mongodb://127.0.0.1:27017/OnnowApp';
-
-
-let OPTION = {user: '', pass: '', autoIndex: true};
-mongoose.connect(URI, OPTION, (error) => {
-    console.log('Connection Success');
-    console.log(error);
-});
+connectWithDB();
 
 // Routing Implement
-app.use('/api/v1', router);
+app.use('/api/v1', routes);
+app.use('/health-check', (req, res) => res.status(200).json('Working'));
 app.use(handleError);
 
 // Undefined Route Implement
 app.use('*', (req, res) => {
-    res.status(404).json({status: 'fail', data: 'Not Found'});
+  res.status(404).json({ status: 'fail', data: 'Not Found' });
 });
 
 module.exports = app;
