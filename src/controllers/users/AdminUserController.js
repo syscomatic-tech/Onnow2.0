@@ -2,7 +2,7 @@ const express = require('express');
 const {AdminModel} = require('../../models');
 
 const adminAuthService = require('../../services/User/AdminAuthService');
-const {verifyOTP} = require('../../services/OTPService/VerifyOTP');
+const otpServices = require('../../services/OTPService/VerifyOTP');
 const router = express.Router();
 // Admin Registration
 
@@ -24,13 +24,16 @@ const Registration = async (req, res, next) => {
 
 const adminOTPVerify = async (req, res, next) => {
     try {
-        const user = await verifyOTP(req.body);
-        return res.json(user);
-    } catch (err) {
+        const user = await otpServices.verifyOTP(req.body);
+        res.status(200).json({
+            message: 'OTP verification successfull',
+        })
+
+    } catch
+        (err) {
         next(err);
     }
 }
-
 
 
 router.post("/otp-verify", adminOTPVerify)

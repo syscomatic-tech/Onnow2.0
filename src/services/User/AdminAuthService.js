@@ -3,9 +3,8 @@ const SendOTP = require('../OTPService/SendOTP');
 const {BadRequest} = require('../../utility/errors');
 const {GeneralError} = require('../../utility/errors');
 const {NotFound} = require('../../utility/errors');
-const{MongoError}=require('../../utility/errors');
-const{handleError}=require('../../utility/errors');
-
+const {MongoError} = require('../../utility/errors');
+const {handleError} = require('../../utility/errors');
 
 
 // ADMIN REG SERVICE
@@ -37,34 +36,10 @@ const registerAdmin = async (body, UserModel) => {
     });
 
     const user = await newUser.save();
-
+    user.password = undefined;
+    user.otp = undefined;
     return user;
 };
 
 
-// ADMIN EMAIL OTP VERIFY
-
-const verifyOTP = async (body) => {
-    const {email, otp} = body;
-
-    try {
-        // Find the user by email and verify the OTP
-        const user = await UserModel.findOne({email, otp});
-        if (!user) {
-            throw new BadRequest('Invalid OTP');
-        }
-
-        // Update the user's isActive and isVerified properties
-        user.isActive = true;
-        user.isVerified = true;
-        await user.save();
-
-        return user;
-    } catch (err) {
-        throw err;
-    }
-};
-
-
-
-module.exports = {registerAdmin, verifyOTP};
+module.exports = {registerAdmin};
