@@ -44,8 +44,7 @@ const OutletManagerSchema = new mongoose.Schema(
       unique: [true, 'your email must be unique/used already'],
       required: [true, 'email must be required'],
     },
-    phone_number: { type: String, max: 13 },
-
+    phoneNumber: { type: String, max: 13 },
     password: {
       type: String,
       max: [6, 'Your Password must be in 6 digits'],
@@ -60,7 +59,7 @@ const OutletManagerSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { versionKey: false },
+
   { timestamps: true }
 );
 
@@ -79,7 +78,7 @@ OutletManagerSchema.methods = {
 };
 
 // Phone Number Validation
-OutletManagerSchema.path('phone_number').validate(function (value) {
+OutletManagerSchema.path('phoneNumber').validate(function (value) {
   const regex = /^\d{13}$/; // regular expression to match 11 digits
   return regex.test(value);
 }, 'Must be a valid phone number');

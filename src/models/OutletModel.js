@@ -16,8 +16,9 @@ const OutLetSchema = new mongoose.Schema({
     max: [400, 'your address should be less then 400'],
   },
   outletPhoneNumber: {
-    required: [true, 'Must be a Phone number'],
+    type: String,
     max: [13, 'Your Phone number must less then 14'],
+    required: [true, 'Must be a Phone number'],
   },
   deliveryCharge: {
     type: Number,

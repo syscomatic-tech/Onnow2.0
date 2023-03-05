@@ -1,33 +1,37 @@
-const SendEmailUtility = require('../../utility/SendEmailUtility');
 const generateOTP = require('../OTPService/OTP-Generate');
 const SendOTP = require('../OTPService/SendOTP');
+const { BadRequest } = require('../../utility/errors');
 
-const AdminAuthService = async (req, res, UserModel) => {
-  const { email } = req.body;
+const registerAdmin = async (body, UserModel) => {
+  const { name, email, phoneNumber, password } = body;
 
-  try {
-    // check if the user already exists
-    const user = await UserModel.findOne({ email });
-    if (user) {
-      return res.status(400).json({ error: 'User already exists' });
-    }
-
-    // generate and send OTP
-    const otp = generateOTP();
-    await SendOTP(email, otp);
-
-    // save the OTP in the user document
-    const newUser = new UserModel({
-      email,
-      otp,
-    });
-    await newUser.save();
-
-    return res.status(200).json({ message: 'OTP sent successfully' });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: 'Something went wrong' });
+  if (!password) {
+    throw new BadRequest('Please enter a password');
   }
+
+  //checks if user exists
+  const userExists = await UserModel.findOne({ email });
+
+  if (userExists) {
+    throw new BadRequest('User already exists');
+  }
+
+  // generate and send OTP
+  const otp = generateOTP();
+  await SendOTP(email, otp);
+
+  // save the OTP in the user document
+  const newUser = new UserModel({
+    name,
+    phoneNumber,
+    email,
+    password,
+    otp,
+  });
+
+  const user = await newUser.save();
+
+  return user;
 };
 
-module.exports = AdminAuthService;
+module.exports = { registerAdmin };

@@ -1,4 +1,4 @@
-const User = require('./UserModel');
+const AdminModel = require('./UserModel');
 const Customer = require('./CustomerModel');
 const BrandManager = require('./BrandManagerModel');
 const OutletManager = require('./OutletManagerModel');
@@ -10,7 +10,7 @@ const Order = require('./OrderModel');
 const Discount = require('./DiscountModel');
 
 module.exports = {
-  User,
+  AdminModel,
   Customer,
   BrandManager,
   OutletManager,

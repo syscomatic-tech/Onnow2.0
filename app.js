@@ -38,6 +38,7 @@ connectWithDB();
 
 // Routing Implement
 app.use('/api/v1', routes);
+app.use('/health-check', (req, res) => res.status(200).json('Working'));
 app.use(handleError);
 
 // Undefined Route Implement

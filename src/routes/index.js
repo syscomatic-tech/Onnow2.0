@@ -1,10 +1,12 @@
 const express = require('express');
 
-const AdminRouter = require('../controllers/users/AdminUserController');
+const AdminRoutes = require('../controllers/users/AdminUserController');
 
 const router = express.Router();
 
 // ADMIN AUTH
-router.post('/admin', AdminRouter);
+router.use('/admin', AdminRoutes);
 
 module.exports = router;
+
+// api/v1/admin/reg
