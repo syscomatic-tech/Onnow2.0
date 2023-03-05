@@ -1,16 +1,23 @@
 const generateOTP = require('../OTPService/OTP-Generate');
 const SendOTP = require('../OTPService/SendOTP');
-const { BadRequest } = require('../../utility/errors');
+const {BadRequest} = require('../../utility/errors');
+const {GeneralError} = require('../../utility/errors');
+const {NotFound} = require('../../utility/errors');
+const{MongoError}=require('../../utility/errors');
+const{handleError}=require('../../utility/errors');
 
+
+
+// ADMIN REG SERVICE
 const registerAdmin = async (body, UserModel) => {
-    const { name, email, phoneNumber, password } = body;
+    const {name, email, phoneNumber, password} = body;
 
     if (!password) {
         throw new BadRequest('Please enter a password');
     }
 
     //checks if user exists
-    const userExists = await UserModel.findOne({ email });
+    const userExists = await UserModel.findOne({email});
 
     if (userExists) {
         throw new BadRequest('User already exists');
@@ -34,4 +41,30 @@ const registerAdmin = async (body, UserModel) => {
     return user;
 };
 
-module.exports = { registerAdmin };
+
+// ADMIN EMAIL OTP VERIFY
+
+const verifyOTP = async (body) => {
+    const {email, otp} = body;
+
+    try {
+        // Find the user by email and verify the OTP
+        const user = await UserModel.findOne({email, otp});
+        if (!user) {
+            throw new BadRequest('Invalid OTP');
+        }
+
+        // Update the user's isActive and isVerified properties
+        user.isActive = true;
+        user.isVerified = true;
+        await user.save();
+
+        return user;
+    } catch (err) {
+        throw err;
+    }
+};
+
+
+
+module.exports = {registerAdmin, verifyOTP};
