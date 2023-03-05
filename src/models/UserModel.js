@@ -13,7 +13,11 @@ const UserSchema = new mongoose.Schema(
       unique: [true, 'your email must be unique/used already'],
       required: [true, 'email must be required'],
     },
-    phoneNumber: { type: String, max: 13 },
+    phoneNumber: {
+        type: String,
+        max:[13,'Phone Number must be less then 14'],
+        unique: [true,'Your Phone Number Must be Unique/Already Used!']
+    },
 
     password: {
       type: String,

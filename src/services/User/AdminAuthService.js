@@ -5,7 +5,8 @@ const {GeneralError} = require('../../utility/errors');
 const {NotFound} = require('../../utility/errors');
 const {MongoError} = require('../../utility/errors');
 const {handleError} = require('../../utility/errors');
-
+const {AdminModel} = require("../../models");
+const CreateToken = require("../../utility/CreateToken");
 
 // ADMIN REG SERVICE
 const registerAdmin = async (body, UserModel) => {
@@ -24,6 +25,7 @@ const registerAdmin = async (body, UserModel) => {
 
     // generate and send OTP
     const otp = generateOTP();
+    ``
     await SendOTP(email, otp);
 
     // save the OTP in the user document
@@ -42,4 +44,31 @@ const registerAdmin = async (body, UserModel) => {
 };
 
 
-module.exports = {registerAdmin};
+// ADMIN LOGIN SERVICE
+
+const adminLoginService = async (body) => {
+
+    const {email, password} = body;
+    console.log("check passowrd",password)
+
+    const user = await AdminModel.findOne({email}).select('name email')
+
+
+    if (!user) {
+        throw new BadRequest("Invalid Credentials")
+    }
+
+    const isPassword = user.authenticate(password)
+    if (!isPassword) {
+        throw new BadRequest("Invalid Credentials")
+    }
+
+    const token=await CreateToken(user.email)
+
+    return {token,user};
+
+
+}
+
+
+module.exports = {registerAdmin,adminLoginService};

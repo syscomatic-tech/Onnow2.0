@@ -36,8 +36,25 @@ const adminOTPVerify = async (req, res, next) => {
 }
 
 
+const adminLogin = async (req, res, next) => {
+    try {
+        const {token,user} = await adminAuthService.adminLoginService(req.body)
+        res.status(200).json({
+            message: 'Login successfully',
+            token,
+            user
+        })
+
+    } catch (err) {
+        next(err)
+    }
+
+
+}
+
 router.post("/otp-verify", adminOTPVerify)
 router.post('/reg', Registration);
+router.post("/login",adminLogin);
 
 
 module.exports = router;
