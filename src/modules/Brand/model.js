@@ -25,7 +25,7 @@ const brandSchema = new mongoose.Schema({
   },
   brandColor: {
     type: String,
-    default: '#F15B25',
+    default: '#f1604a',
   },
   subDomain: {
     type: String,

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const brandServices = require('./service');
+
 //Create Brand
 
 const createBrand = async (req, res, next) => {
@@ -11,6 +12,10 @@ const createBrand = async (req, res, next) => {
     next(e, req, res);
   }
 };
+
+
+
+
 
 // UpdateBrand By ID
 const updateBrandById = () => {};
