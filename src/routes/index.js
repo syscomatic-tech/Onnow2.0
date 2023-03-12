@@ -1,13 +1,9 @@
 const express = require('express');
-
-const AdminRoutes = require('../controllers/users/AdminUserController');
-
 const router = express.Router();
+const brandRoute = require("../modules/Brand/controller");
 
 
-// ADMIN AUTH
-router.use('/admin', AdminRoutes);
-
+router.use("/brand", brandRoute)
 
 module.exports = router;
 
