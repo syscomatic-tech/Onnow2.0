@@ -1,15 +1,38 @@
-const { getDb } = require("../../config/mongo");
+const mongoose = require('mongoose');
 
-const collectionName = "brand";
+const brandSchema = new mongoose.Schema({
+  owner: {
+    owner_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Owner Id is required'],
+    },
+    ownerName: {
+      type: String,
+      required: [true, 'Owner Name is required'],
+    },
+  },
+  banner: {
+    type: String,
+    required: [true, 'Banner is required'],
+  },
+  logo: {
+    type: String,
+    required: [true, 'Logo is required'],
+  },
+  brandName: {
+    type: String,
+    required: [true, 'Brand Name is required'],
+  },
+  brandColor: {
+    type: String,
+    default: '#F15B25',
+  },
+  subDomain: {
+    type: String,
+    required: [true, 'Sub Domain is required'],
+  },
+});
 
-const getCollection = () => {
-    console.log(`getCollection: ${collectionName}`);
-    const db = getDb();
-    const collection = db.collection(collectionName);
-    return collection;
-};
+const brandModel = mongoose.model('brand', brandSchema);
 
-module.exports = {
-    brand: getCollection(),
-    name: collectionName,
-};
+module.exports = brandModel;
