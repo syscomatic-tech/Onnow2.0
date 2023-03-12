@@ -21,7 +21,14 @@ const deleteBrand = () => {};
 const getBrandById = () => {};
 // GetALL Brand By ID
 
-const getAllBrand = () => {};
+const getAllBrand = async () => {
+  try {
+    const brands = await brandServices.getBrands();
+    res.status(200).json({ length: brands.length, brands });
+  } catch (err) {
+    next(err, req, res);
+  }
+};
 
 router.get('/', getAllBrand);
 router.get('/:id', getBrandById);
